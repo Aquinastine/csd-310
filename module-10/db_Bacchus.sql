@@ -30,20 +30,20 @@ DROP TABLE IF EXISTS shipment_order_join;
 
 CREATE TABLE Suppliers (
     supplier_ID     INT             NOT NULL    AUTO_INCREMENT,
-    supplier_name   VARCHAR(75)     NOT NULL,
-    contact_name   VARCHAR(75)     NOT NULL,
-    contact_email   VARCHAR(75)     NOT NULL,
-    contact_phone   VARCHAR(15)     NOT NULL,
+    supplier_name   VARCHAR(75),
+    contact_name   VARCHAR(75),
+    contact_email   VARCHAR(75),
+    contact_phone   VARCHAR(15),
      
     PRIMARY KEY(supplier_ID)
 );
 
 CREATE TABLE Supplies (
     part_ID     INT             NOT NULL    AUTO_INCREMENT,
-    part_name   VARCHAR(75)     NOT NULL,
-    inventory_count   VARCHAR(75)     NOT NULL,
-    reorder_point   VARCHAR(75)     NOT NULL,
-    reorder_amount   VARCHAR(15)     NOT NULL,
+    part_name   VARCHAR(75),
+    inventory_count   VARCHAR(75),
+    reorder_point   VARCHAR(75),
+    reorder_amount   VARCHAR(15),
     
     PRIMARY KEY(part_ID)
 );
@@ -51,20 +51,20 @@ CREATE TABLE Supplies (
 CREATE TABLE departments (
     department_ID     INT             NOT NULL    AUTO_INCREMENT,
     department_name   VARCHAR(75)     NOT NULL,
-    manager_ID   INT    NOT NULL,
+    manager_ID   INT,
     
     PRIMARY KEY(department_ID)
 );
 
 CREATE TABLE employees (
     empl_ID   INT             NOT NULL    AUTO_INCREMENT,
-    f_name  VARCHAR(35)     NOT NULL,
-    l_name   VARCHAR(35)     NOT NULL,
-    job_title    VARCHAR(50)    NOT NULL,
+    f_name  VARCHAR(35),
+    l_name   VARCHAR(35),
+    job_title    VARCHAR(50),
     department_ID    INT    NOT NULL,
     supervisor_ID    INT,
-    is_salary   VARCHAR(5)    NOT NULL,
-    hourly_pay_rate    INT,
+    is_salary   BOOLEAN    NOT NULL,
+    hourly_pay_rate    FLOAT,
     
     
     PRIMARY KEY(empl_ID)
@@ -199,7 +199,7 @@ INSERT INTO Supplies(part_name, inventory_count, reorder_point, reorder_amount)
     VALUES('corks', '30000', '15000', '30000');
     
 INSERT INTO Supplies(part_name, inventory_count, reorder_point, reorder_amount)
-    VALUES('label', '50000', '10000', '300000');
+    VALUES('labels', '50000', '10000', '300000');
     
 INSERT INTO Supplies(part_name, inventory_count, reorder_point, reorder_amount)
     VALUES('boxes', '45000', '1500', '25000');
@@ -262,101 +262,101 @@ INSERT INTO supplies_suppliers_join(supplier_ID, part_ID, supplier_part_num)
 
 -- insert into departments
 INSERT INTO departments(department_name, manager_ID)
-    VALUES('Executive', '11');
+    VALUES('Executive', 11);
     
 INSERT INTO departments(department_name, manager_ID)
-    VALUES('Payroll and Finance', '22');
+    VALUES('Payroll and Finance', 22);
     
 INSERT INTO departments(department_name, manager_ID)
-    VALUES('Marketing', '33');
+    VALUES('Marketing', 33);
     
 INSERT INTO departments(department_name, manager_ID)
-    VALUES('Production', '44');
+    VALUES('Production', 44);
     
 INSERT INTO departments(department_name, manager_ID)
-    VALUES('Distribution', '55');
+    VALUES('Distribution', 55);
     
 -- insert into employees table   
 INSERT INTO employees(f_name, l_name, job_title, department_ID, supervisor_ID, is_salary, hourly_pay_rate)
-    VALUES('Stan','Bacchus','co-owner', (SELECT department_ID FROM departments WHERE department_name = 'Executive'), (SELECT manager_ID FROM departments WHERE department_name = 'Executive'), 'yes', NULL);
+    VALUES('Stan','Bacchus','co-owner', (SELECT department_ID FROM departments WHERE department_name = 'Executive'), (SELECT manager_ID FROM departments WHERE department_name = 'Executive'), True, NULL);
     
 INSERT INTO employees(f_name, l_name, job_title, department_ID, supervisor_ID, is_salary, hourly_pay_rate)
-    VALUES('Davis','Bacchus','co-owner', (SELECT department_ID FROM departments WHERE department_name = 'Executive'), (SELECT manager_ID FROM departments WHERE department_name = 'Executive'), 'yes', NULL);
+    VALUES('Davis','Bacchus','co-owner', (SELECT department_ID FROM departments WHERE department_name = 'Executive'), (SELECT manager_ID FROM departments WHERE department_name = 'Executive'), True, NULL);
 
 INSERT INTO employees(f_name, l_name, job_title, department_ID, supervisor_ID, is_salary, hourly_pay_rate)
-    VALUES('Janet','Collins','P&F Manager', (SELECT department_ID FROM departments WHERE department_name = 'Payroll and Finance'), (SELECT manager_ID FROM departments WHERE department_name = 'Payroll and Finance'), 'yes', NULL);
+    VALUES('Janet','Collins','P&F Manager', (SELECT department_ID FROM departments WHERE department_name = 'Payroll and Finance'), (SELECT manager_ID FROM departments WHERE department_name = 'Payroll and Finance'), True, NULL);
     
 INSERT INTO employees(f_name, l_name, job_title, department_ID, supervisor_ID, is_salary, hourly_pay_rate)
-    VALUES('Roz','Murphy','Marketing Head', (SELECT department_ID FROM departments WHERE department_name = 'Marketing'), (SELECT manager_ID FROM departments WHERE department_name = 'Marketing'), 'yes', NULL);
+    VALUES('Roz','Murphy','Marketing Head', (SELECT department_ID FROM departments WHERE department_name = 'Marketing'), (SELECT manager_ID FROM departments WHERE department_name = 'Marketing'), True, NULL);
 
 INSERT INTO employees(f_name, l_name, job_title, department_ID, supervisor_ID, is_salary, hourly_pay_rate)
-    VALUES('Bob','Ulrich','Marketing Assistant', (SELECT department_ID FROM departments WHERE department_name = 'Marketing'), NULL, 'no', '35');
+    VALUES('Bob','Ulrich','Marketing Assistant', (SELECT department_ID FROM departments WHERE department_name = 'Marketing'), NULL, False, '35');
     
 INSERT INTO employees(f_name, l_name, job_title, department_ID, supervisor_ID, is_salary, hourly_pay_rate)
-    VALUES('Henry','Doyle','Production Manager', (SELECT department_ID FROM departments WHERE department_name = 'Production'), (SELECT manager_ID FROM departments WHERE department_name = 'Production'), 'yes', NULL);
+    VALUES('Henry','Doyle','Production Manager', (SELECT department_ID FROM departments WHERE department_name = 'Production'), (SELECT manager_ID FROM departments WHERE department_name = 'Production'), True, NULL);
 
 INSERT INTO employees(f_name, l_name, job_title, department_ID, supervisor_ID, is_salary, hourly_pay_rate)
-    VALUES('Vincent','Brewer','Production Technician', (SELECT department_ID FROM departments WHERE department_name = 'Production'), NULL, 'no', '27');
+    VALUES('Vincent','Brewer','Production Technician', (SELECT department_ID FROM departments WHERE department_name = 'Production'), NULL, False, '27');
 
 INSERT INTO employees(f_name, l_name, job_title, department_ID, supervisor_ID, is_salary, hourly_pay_rate)
-    VALUES('Michael','Amara','Production Technician', (SELECT department_ID FROM departments WHERE department_name = 'Production'), NULL, 'no', '27');
+    VALUES('Michael','Amara','Production Technician', (SELECT department_ID FROM departments WHERE department_name = 'Production'), NULL, False, '27');
 
 INSERT INTO employees(f_name, l_name, job_title, department_ID, supervisor_ID, is_salary, hourly_pay_rate)
-    VALUES('David','Walker','Production Technician', (SELECT department_ID FROM departments WHERE department_name = 'Production'), NULL, 'no', '25');
+    VALUES('David','Walker','Production Technician', (SELECT department_ID FROM departments WHERE department_name = 'Production'), NULL, False, '25');
 
 INSERT INTO employees(f_name, l_name, job_title, department_ID, supervisor_ID, is_salary, hourly_pay_rate)
-    VALUES('Sandra','Roman','Production Technician', (SELECT department_ID FROM departments WHERE department_name = 'Production'), NULL, 'no', '25');
+    VALUES('Sandra','Roman','Production Technician', (SELECT department_ID FROM departments WHERE department_name = 'Production'), NULL, False, '25');
 
 INSERT INTO employees(f_name, l_name, job_title, department_ID, supervisor_ID, is_salary, hourly_pay_rate)
-    VALUES('Greg','Brewer','Production Technician', (SELECT department_ID FROM departments WHERE department_name = 'Production'), NULL, 'no', '25');
+    VALUES('Greg','Brewer','Production Technician', (SELECT department_ID FROM departments WHERE department_name = 'Production'), NULL, False, '25');
 
 INSERT INTO employees(f_name, l_name, job_title, department_ID, supervisor_ID, is_salary, hourly_pay_rate)
-    VALUES('Chad','Harding','Production Technician', (SELECT department_ID FROM departments WHERE department_name = 'Production'), NULL, 'no', '27');
+    VALUES('Chad','Harding','Production Technician', (SELECT department_ID FROM departments WHERE department_name = 'Production'), NULL, False, '27');
     
 INSERT INTO employees(f_name, l_name, job_title, department_ID, supervisor_ID, is_salary, hourly_pay_rate)
-    VALUES('Jamie','Foster','Production Technician', (SELECT department_ID FROM departments WHERE department_name = 'Production'), NULL, 'no', '25');
+    VALUES('Jamie','Foster','Production Technician', (SELECT department_ID FROM departments WHERE department_name = 'Production'), NULL, False, '25');
     
 INSERT INTO employees(f_name, l_name, job_title, department_ID, supervisor_ID, is_salary, hourly_pay_rate)
-    VALUES('Virginia','Grant','Production Technician', (SELECT department_ID FROM departments WHERE department_name = 'Production'), NULL, 'no', '24');
+    VALUES('Virginia','Grant','Production Technician', (SELECT department_ID FROM departments WHERE department_name = 'Production'), NULL, False, '24');
     
 INSERT INTO employees(f_name, l_name, job_title, department_ID, supervisor_ID, is_salary, hourly_pay_rate)
-    VALUES('Kyle','Dunst','Production Technician', (SELECT department_ID FROM departments WHERE department_name = 'Production'), NULL, 'no', '24');
+    VALUES('Kyle','Dunst','Production Technician', (SELECT department_ID FROM departments WHERE department_name = 'Production'), NULL, False, '24');
     
 INSERT INTO employees(f_name, l_name, job_title, department_ID, supervisor_ID, is_salary, hourly_pay_rate)
-    VALUES('Carlos','Garcia','Production Technician', (SELECT department_ID FROM departments WHERE department_name = 'Production'), NULL, 'no', '24');
+    VALUES('Carlos','Garcia','Production Technician', (SELECT department_ID FROM departments WHERE department_name = 'Production'), NULL, False, '24');
     
 INSERT INTO employees(f_name, l_name, job_title, department_ID, supervisor_ID, is_salary, hourly_pay_rate)
-    VALUES('Larissa','Santos','Production Technician', (SELECT department_ID FROM departments WHERE department_name = 'Production'), NULL, 'no', '24');
+    VALUES('Larissa','Santos','Production Technician', (SELECT department_ID FROM departments WHERE department_name = 'Production'), NULL, False, '24');
     
 INSERT INTO employees(f_name, l_name, job_title, department_ID, supervisor_ID, is_salary, hourly_pay_rate)
-    VALUES('Monica','Wilkins','Production Technician', (SELECT department_ID FROM departments WHERE department_name = 'Production'), NULL, 'no', '23');
+    VALUES('Monica','Wilkins','Production Technician', (SELECT department_ID FROM departments WHERE department_name = 'Production'), NULL, False, '23');
     
 INSERT INTO employees(f_name, l_name, job_title, department_ID, supervisor_ID, is_salary, hourly_pay_rate)
-    VALUES('Harrold','Slater','Production Technician', (SELECT department_ID FROM departments WHERE department_name = 'Production'), NULL, 'no', '23');
+    VALUES('Harrold','Slater','Production Technician', (SELECT department_ID FROM departments WHERE department_name = 'Production'), NULL, False, '23');
     
 INSERT INTO employees(f_name, l_name, job_title, department_ID, supervisor_ID, is_salary, hourly_pay_rate)
-    VALUES('Lois','Griffith','Production Technician', (SELECT department_ID FROM departments WHERE department_name = 'Production'), NULL, 'no', '22');
+    VALUES('Lois','Griffith','Production Technician', (SELECT department_ID FROM departments WHERE department_name = 'Production'), NULL, False, '22');
         
 INSERT INTO employees(f_name, l_name, job_title, department_ID, supervisor_ID, is_salary, hourly_pay_rate)
-    VALUES('Jason','Long','Production Technician', (SELECT department_ID FROM departments WHERE department_name = 'Production'), NULL, 'no', '22');
+    VALUES('Jason','Long','Production Technician', (SELECT department_ID FROM departments WHERE department_name = 'Production'), NULL, False, '22');
         
 INSERT INTO employees(f_name, l_name, job_title, department_ID, supervisor_ID, is_salary, hourly_pay_rate)
-    VALUES('Rose','McNeal','Production Technician', (SELECT department_ID FROM departments WHERE department_name = 'Production'), NULL, 'no', '22');
+    VALUES('Rose','McNeal','Production Technician', (SELECT department_ID FROM departments WHERE department_name = 'Production'), NULL, False, '22');
         
 INSERT INTO employees(f_name, l_name, job_title, department_ID, supervisor_ID, is_salary, hourly_pay_rate)
-    VALUES('Gloria','Shane','Production Technician', (SELECT department_ID FROM departments WHERE department_name = 'Production'), NULL, 'no', '22');
+    VALUES('Gloria','Shane','Production Technician', (SELECT department_ID FROM departments WHERE department_name = 'Production'), NULL, False, '22');
         
 INSERT INTO employees(f_name, l_name, job_title, department_ID, supervisor_ID, is_salary, hourly_pay_rate)
-    VALUES('Oliver','Gaines','Production Technician', (SELECT department_ID FROM departments WHERE department_name = 'Production'), NULL, 'no', '21');
+    VALUES('Oliver','Gaines','Production Technician', (SELECT department_ID FROM departments WHERE department_name = 'Production'), NULL, False, '21');
         
 INSERT INTO employees(f_name, l_name, job_title, department_ID, supervisor_ID, is_salary, hourly_pay_rate)
-    VALUES('Ralieh','Acquire','Production Technician', (SELECT department_ID FROM departments WHERE department_name = 'Production'), NULL, 'no', '20');
+    VALUES('Ralieh','Acquire','Production Technician', (SELECT department_ID FROM departments WHERE department_name = 'Production'), NULL, False, '20');
         
 INSERT INTO employees(f_name, l_name, job_title, department_ID, supervisor_ID, is_salary, hourly_pay_rate)
-    VALUES('Caddly','Hoohoo','Production Technician', (SELECT department_ID FROM departments WHERE department_name = 'Production'), NULL, 'no', '20');
+    VALUES('Caddly','Hoohoo','Production Technician', (SELECT department_ID FROM departments WHERE department_name = 'Production'), NULL, False, '20');
         
 INSERT INTO employees(f_name, l_name, job_title, department_ID, supervisor_ID, is_salary, hourly_pay_rate)
-    VALUES('Maria','Costanza','Distribution Head', (SELECT department_ID FROM departments WHERE department_name = 'Production'), (SELECT manager_ID FROM departments WHERE department_name = 'Production'), 'yes', NULL);
+    VALUES('Maria','Costanza','Distribution Head', (SELECT department_ID FROM departments WHERE department_name = 'Production'), (SELECT manager_ID FROM departments WHERE department_name = 'Production'), True, NULL);
 
 -- insert into worklog table
 INSERT INTO worklog(empl_ID, work_date, hours_worked)
@@ -560,10 +560,10 @@ INSERT INTO shipment_order_join(shipment_ID, order_ID)
     VALUES((SELECT shipment_ID FROM shipments JOIN distributor_orders ON shipments.expected_delivery = distributor_orders.expected_delivery WHERE shipments.shipped_date = '2024-12-08'), (SELECT order_ID FROM distributor_orders JOIN shipments ON shipments.expected_delivery = distributor_orders.expected_delivery WHERE shipments.shipped_date = '2024-12-08'));
 
 INSERT INTO shipment_order_join(shipment_ID, order_ID)
-    VALUES((SELECT shipment_ID FROM shipments JOIN distributor_orders ON shipments.expected_delivery = distributor_orders.expected_delivery WHERE shipments.shipped_date = '2024-10-13'), (SELECT order_ID FROM distributor_orders JOIN shipments ON shipments.expected_delivery = distributor_orders.expected_delivery WHERE shipments.shipped_date = '2024-12-13'));
+    VALUES((SELECT shipment_ID FROM shipments JOIN distributor_orders ON shipments.expected_delivery = distributor_orders.expected_delivery WHERE shipments.shipped_date = '2024-12-13'), (SELECT order_ID FROM distributor_orders JOIN shipments ON shipments.expected_delivery = distributor_orders.expected_delivery WHERE shipments.shipped_date = '2024-12-13'));
     
 INSERT INTO shipment_order_join(shipment_ID, order_ID)
     VALUES((SELECT shipment_ID FROM shipments JOIN distributor_orders ON shipments.expected_delivery = distributor_orders.expected_delivery WHERE shipments.shipped_date = '2025-02-05'), (SELECT order_ID FROM distributor_orders JOIN shipments ON shipments.expected_delivery = distributor_orders.expected_delivery WHERE shipments.shipped_date = '2025-02-05'));
     
 INSERT INTO shipment_order_join(shipment_ID, order_ID)
-    VALUES((SELECT shipment_ID FROM shipments JOIN distributor_orders ON shipments.expected_delivery = distributor_orders.expected_delivery WHERE shipments.shipped_date = NULL), (SELECT order_ID FROM distributor_orders JOIN shipments ON shipments.expected_delivery = distributor_orders.expected_delivery WHERE shipments.shipped_date = '2025-02-20'));
+    VALUES((SELECT shipment_ID FROM shipments JOIN distributor_orders ON shipments.expected_delivery = distributor_orders.expected_delivery WHERE shipments.shipped_date = '2025-02-20'), (SELECT order_ID FROM distributor_orders JOIN shipments ON shipments.expected_delivery = distributor_orders.expected_delivery WHERE shipments.shipped_date = '2025-02-20'));
