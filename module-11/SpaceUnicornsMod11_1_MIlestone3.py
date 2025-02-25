@@ -132,7 +132,7 @@ def showDistributorWineOrdersRpt (cursor):
     title = 'Number of Cases of Wine Type Ordered by Distributor'
 
     #Create a list of header labels
-    header = ['Supplier', 'Wine Type', 'Delivery Performance \n(days)']
+    header = ['Supplier', 'Wine Type', 'Cases']
 
     #Build report query
     stQry = "SELECT 	b.distributor_name as Distributor, " +\
